@@ -75,7 +75,7 @@ void getKorni (double a, double b, double c,
 		return;
 		} 
 
-	if (doubleIsZero(D)) 					//D = 0
+	if (doubleIsZero(D)) 							//D = 0
 		{
 		*count = 1;
 		*x1 = -b / 2*a;
