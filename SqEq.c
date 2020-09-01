@@ -17,18 +17,72 @@
  
 */
 
-void readCoef (double* a, double* b, double* c);
+/*++ 
+	
+	getRoots
 
-void getKorni (double a, double b, double c, 
-			   double* x1, double* x2, 
-			   unsigned int* count);
+	Функция, вычисляющая корни квадратного уравнения.
+	Принимает следующие аргументы:
+
+	a 		коэффициент перед x^2
+	b 		коэффициент перед x
+	с 		свободный член
+
+	*x1		первый корень
+	*x2		второй корень
+
+	Функция возвращает информацию о вычисленных корнях:
+
+	0		уравнение не имеет решения
+	1		уравнение имеет один корень
+	2		уравнение имеет два корня
+	3		уравнение имеет бесконечно много корней
+
+--*/
+
+unsigned int getRoots (double a, double b, double c, 
+			   double* x1, double* x2);
+
+/*++
+
+	doubleIsZero
+
+	Функция, проверяющая, является ли double нулем.
+	Принимает следующие аргументы:
+
+	x 		число с плавающей точкой, которое нужно сравнить с нулем
+
+	Функция возвращает следующие значния:
+
+	false	число не ноль
+	true	число ноль
+
+--*/
 
 bool doubleIsZero (const double x);
 
-void printEq (const double x1, const double x2, 
-			  const unsigned int count);
+/*++
 
-double abs (const double x);
+	printEq
+
+	Функция, печатающая информацию о решении квадратного уравнения.
+	Принимает следующие аргументы:
+
+	x1		первый аргумент
+	x2		второй аргумент
+	
+	info	информация о количестве корней:
+
+		0		уравнение не имеет корней
+		1		уравнение имеет один корень
+		2		уравнение имеет два корня
+		3		уравнение имеет бесконечно много корней
+
+--*/
+
+void printEq (const double x1, const double x2, 
+			  const unsigned int info);
+
 
 //=================================================
 
@@ -37,95 +91,92 @@ int main ()
 	setlocale(LC_ALL, "Rus");
 
 	//Coef
-	double a, b, c;
+	double 
+		   a 	=	0,
+		   b 	=	0,
+		   c 	= 	0;
 
-	readCoef(&a, &b, &c);
+	printf("%d\n", scanf("%lf%lf%lf", &a, &b, &c));
 
-	//Korni
-	double x1, x2;
-	unsigned int count = 0;
+	//Roots
+	double 
+		   x1 	=	0,
+		   x2	= 	0;
 
-	getKorni(a, b, c, &x1, &x2, &count);
+	unsigned int 
+		   info = 0;
 
-	printEq(x1, x2, count);
+	info = getRoots(a, b, c, &x1, &x2);
+
+	printEq(x1, x2, info);
 
 	return 0;
 	}
 
 //=================================================
 
-void readCoef (double* a, double* b, double* c)
+unsigned int getRoots (double a, double b, double c, 
+			   double* x1, double* x2) 
 	{
-	assert(scanf("%lf %lf %lf", a, b, c));
-	//print_coef
-	}
 
-//=================================================
 
-void getKorni (double a, double b, double c, 
-			   double* x1, double* x2,
-			   unsigned int* count) 
-	{
+	if (a * c == 0)							//D not exist
+		return 3;
+
 	double D = b*b - 4*a*c;
 
 	if (D < 0) 								//D > 0
-		{
-		*count = 0;
+		return 0; 
 
-		return;
-		} 
-
-	if (doubleIsZero(D)) 							//D = 0
+	if (doubleIsZero(D)) 					//D = 0
 		{
-		*count = 1;
 		*x1 = -b / 2*a;
 
-		return;
+		return 1;
 		}	
 
-	*count = 2;								//D = 2
+											//D = 2
 	*x1 = (-b + sqrt(D)) / 2*a;
 	*x2 = (-b - sqrt(D)) / 2*a;	
+	return 2;
 	}
 
 //=================================================
 
 bool doubleIsZero (const double x) 
 	{
-	return abs(x) < 1e-5;
+	return fabs(x) < 1e-5;
 	}
 
 //==================================================
 
 void printEq (const double x1, const double x2, 
-			  const unsigned int count) 
+			  const unsigned int info) 
 	{
-	printf("\nКолво корней: %u\n", count);
+	printf("\nКолво корней: ");
 
-	switch (count)
+	switch (info)
 		{
 		case 0:								//- -	
-			printf("Корней нет.\n");
+			printf("0\nКорней нет.\n");
 			break;
 
 		case 1:								//x1 -
-			printf("Корень: %.5lf\n", x1);
+			printf("1\nКорень: %lf\n", x1);
 			break;	
 
 		case 2: 							//x1 x2
-			printf("Первый корень: %.5lf\n", x1);
-			printf("Второй корень: %.5lf\n", x2);
+			printf("2\nПервый корень: %lf\n", x1);
+			printf("Второй корень: %lf\n", x2);
+			break;
+		case 3:
+			printf("inf\nКорней бесконечно много.\n");
+			break;	
 		}
 	}
 
 //==================================================
 
-double abs (const double x) 
-	{
-	if (x < 0)
-		return -x;
-	return x;
-	}	
 
 
 
