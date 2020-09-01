@@ -96,7 +96,7 @@ int main ()
 		   b 	=	0,
 		   c 	= 	0;
 
-	printf("%d\n", scanf("%lf%lf%lf", &a, &b, &c));
+	assert(scanf("%lf%lf%lf", &a, &b, &c) == 3);
 
 	//Roots
 	double 
