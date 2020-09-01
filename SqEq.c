@@ -104,7 +104,7 @@ int main ()
 		   x2	= 	0;
 
 	unsigned int 
-		   info = 0;
+		   info = 	0;
 
 	info = getRoots(a, b, c, &x1, &x2);
 
