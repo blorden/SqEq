@@ -125,17 +125,17 @@ unsigned int getRoots (double a, double b, double c,
 
 	double D = b*b - 4*a*c;
 
-	if (D < 0) 								//D > 0
+	if (D < 0) 							//D > 0
 		return 0; 
 
-	if (doubleIsZero(D)) 					//D = 0
+	if (doubleIsZero(D)) 						//D = 0
 		{
 		*x1 = -b / 2*a;
 
 		return 1;
 		}	
 
-											//D = 2
+									//D = 2
 	*x1 = (-b + sqrt(D)) / 2*a;
 	*x2 = (-b - sqrt(D)) / 2*a;	
 	return 2;
@@ -157,15 +157,15 @@ void printEq (const double x1, const double x2,
 
 	switch (info)
 		{
-		case 0:								//- -	
+		case 0:							   //- -	
 			printf("0\nКорней нет.\n");
 			break;
 
-		case 1:								//x1 -
+		case 1:							   //x1 -
 			printf("1\nКорень: %lf\n", x1);
 			break;	
 
-		case 2: 							//x1 x2
+		case 2: 						   //x1 x2
 			printf("2\nПервый корень: %lf\n", x1);
 			printf("Второй корень: %lf\n", x2);
 			break;
