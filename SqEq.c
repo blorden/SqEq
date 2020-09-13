@@ -43,6 +43,38 @@
 unsigned int getRoots (double a, double b, double c, 
                double* x1, double* x2);
 
+//Юнит-тест для getRoots
+//---------------------------------------------------------------------------------
+#define ugetRoots(_a, _b, _c)                                                     \
+                                                                                  \
+    double __a  = _a,                                                             \
+           __b  = _b,                                                             \
+           __c  = _c;                                                             \
+                                                                                  \
+    double __x1 = 0.0,                                                            \
+           __x2 = 0.0;                                                            \
+                                                                                  \
+    unsigned int __colvo = getRoots(__a, __b, __c, &__x1, &__x2);                 \
+                                                                                  \
+    printf("\nЮнит-тест");                                                        \
+                                                                                  \
+    switch(__colvo)                                                               \
+        {                                                                         \
+        case 0:                                                                   \
+            printf("\nКолво корней: %u\n", __colvo);                              \
+            break;                                                                \
+        case 1:                                                                   \
+            printf("\nКолво корней: %u\nКорни: %lf\n", __colvo, __x1);            \
+            break;                                                                \
+        case 2:                                                                   \
+            printf("\nКолво корней: %u\nКорни: %lf %lf\n", __colvo, __x1, __x2);  \
+            break;                                                                \
+        case INF_ROOTS:                                                           \
+            printf("\nКолво корней: inf\n");                                      \
+            break;                                                                \
+        }
+//---------------------------------------------------------------------------------
+
 /*++
 
     doubleIsZero
@@ -107,6 +139,9 @@ int main ()
            info = 0;
 
     info = getRoots(a, b, c, &x1, &x2);
+
+
+    ugetRoots(0, 3, 3)
 
     printEq(x1, x2, info);
 
